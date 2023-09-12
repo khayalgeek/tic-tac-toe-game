@@ -3,11 +3,45 @@ const board = document.querySelector('.board');
 const restartButton = document.getElementById('restart');
 const playerXScore = document.getElementById('playerX');
 const playerOScore = document.getElementById('playerO');
-let currentPlayer = 'X';
+let currentPlayer = "X";
 let xScore = 0;
 let oScore = 0;
 
 // cells all event
+cells.forEach(cell => {
+    cell.addEventListener('click', handleClick, { once: true });
+});
+
+restartButton.addEventListener('click', ()=>{
+    cells.forEach(cell=>{
+        cell.innerText = '';
+        cell.addEventListener('click', handleClick, {once:true});
+    });
+    currentPlayer ="X";
+});
+
+
+function handleClick(e) {
+    const cell = e.target;
+    cell.innerText = currentPlayer;
+    if (checkWin(currentPlayer)) {
+        if (currentPlayer === "X") {
+            xScore++;
+            playerXScore.innerText == `Player X: ${xScore}`;
+        } else {
+            oScore++;
+            playerXScore.innerText == `Player O: ${oScore}`
+        }
+        setTimeout(() => alert(`${currentPlayer} wins!`), 10);
+        return;
+    }
+    if (checkDrow()) {
+        setTimeout(() => alert(`Draw!`), 10);
+        return;
+    }
+
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+}
 
 
 function checkWin(player) {
@@ -24,7 +58,7 @@ function checkWin(player) {
 
     return winningCombinations.some(combination => {
         return combination.every(index => {
-            return cells[index] === player;
+            return cells[index].innerHTML === player;
         });
     });
 }

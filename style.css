@@ -12,3 +12,12 @@ body {
     padding: 20px;
     background-color: #fff;
 }
+
+.scoreboard{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.player{
+    font-size: 20px;
+}
